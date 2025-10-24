@@ -1,0 +1,37 @@
+@import "tailwindcss";
+
+@import url('https://fonts.googleapis.com/css2?family=Josefin+Sans:ital,wght@0,100..700;1,100..700&family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&display=swap');
+
+
+
+@theme {
+
+  --font-Josefin:  "Josefin Sans", sans-serif;
+  --font-Lato:  "Lato", sans-serif;
+  --breakpoint-xs: 475px;
+  
+   
+}
+
+.slick-slide {
+  padding: 0 10px;     
+}
+
+.slick-list {
+  margin: 0 -12px;    
+}
+
+
+
+
+
+
+
+
+ /* '2xs': '320px', // Custom 2xs breakpoint
+      'xs': '475px',  // Optional, as Tailwind has no default 'xs' either
+      'sm': '640px',
+      'md': '768px',
+      'lg': '1024px',
+      'xl': '1280px',
+      '2xl': '1536px', */
