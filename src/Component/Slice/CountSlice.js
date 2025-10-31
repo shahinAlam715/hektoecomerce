@@ -4,6 +4,7 @@ export const CountSlice = createSlice({
   name: 'product',
   initialState: {
     carItem: localStorage.getItem("cart") ? JSON.parse(localStorage.getItem("cart")) : [],
+   
   },
   reducers: {
     addtoCart: (state, action) => {
@@ -33,14 +34,34 @@ export const CountSlice = createSlice({
 
     increment: (state, action)=>{
       
+      if ( state.carItem[action.payload].quntity < 10) {
+        
         state.carItem[action.payload].quntity += 1
 
-        localStorage.setItem("cart", JSON.CountSlice(state.carItem))
+        localStorage.setItem("cart", JSON.stringify(state.carItem))
+      }
+
+
+    },
+
+    decrement: (state, action)=>{
+
+      if ( state.carItem[action.payload].quntity > 1) {
+        
+        state.carItem[action.payload].quntity -= 1
+         localStorage.setItem("cart", JSON.stringify(state.carItem))
+      }
+    },
+
+    productRemove: (state, action)=>{
+        state.carItem.splice(action.payload, 1)
     }
+
+
   
   },
 })
 
-export const { addtoCart, increment } = CountSlice.actions
+export const { addtoCart, increment, decrement,  productRemove } = CountSlice.actions
 
 export default CountSlice.reducer

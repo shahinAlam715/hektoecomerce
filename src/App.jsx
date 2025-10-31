@@ -4,6 +4,7 @@ import { Product } from "./Component/Pages/Product";
 import Rootlayout from "./Component/Rootlayout";
 import Productdetails from "./Component/Pages/Productdetails";
 import Cart from "./Component/Pages/Cart";
+import Error from "./Component/Error";
 
 let router = createBrowserRouter(createRoutesFromElements(
   <>
@@ -14,6 +15,7 @@ let router = createBrowserRouter(createRoutesFromElements(
         <Route path="/productdetails" element={<Productdetails/>}></Route>
         <Route path="/cart" element={<Cart/>}></Route>
     </Route>
+    <Route path="*" element={<Error/>}></Route>
   </>
 ))
 
