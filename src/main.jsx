@@ -7,6 +7,7 @@ import App from './App.jsx'
 import { ContextApi } from './Component/ContextApi.jsx';
 import store from './Store'
 import  { Provider }  from 'react-redux'
+import firebaseConfig from "./firbase.confiq.js"
 
 
 

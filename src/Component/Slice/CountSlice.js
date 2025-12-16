@@ -55,6 +55,7 @@ export const CountSlice = createSlice({
 
     productRemove: (state, action)=>{
         state.carItem.splice(action.payload, 1)
+         localStorage.setItem("cart", JSON.stringify(state.carItem))
     }
 
 

@@ -42,7 +42,7 @@ const Post = ({ allpage, filltercate, listitem}) => {
           <div className="">
 
 
-            {filltercate.length > 0 ?
+            {filtershow.length > 0 ?
 
 
               <div className="">

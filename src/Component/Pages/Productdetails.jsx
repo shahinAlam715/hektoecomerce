@@ -132,8 +132,8 @@ const Productdetails = () => {
 
                                 <div className="flex items-center gap-x-4 my-[64px] justify-center">
                                     <div className="" onClick={()=>handlecart(singleproduct)}>
-                                        <button className='text-[16px] font-Josefin text-[#fff] px-6 py-2 bg-[#FB2E86]
-                                         rounded-[10px] hover:bg-[#fff] hover:text-[#151875]'>Add To cart</button>
+                                        <button className='text-[16px] font-Josefin text-[#151875] px-6 py-2 bg-[#fff]
+                                         rounded-[10px] hover:bg-[#FB2E86] hover:text-[#fff]'>Add To cart</button>
                                     </div>
 
                                         <div className="">

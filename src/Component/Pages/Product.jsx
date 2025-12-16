@@ -125,12 +125,18 @@ export const Product = () => {
      // listgird  end//
 
 
+     let handleAllproduct = ()=>{
+       setfilltercate("");
+        
+     }
+
+
 
     return (
         <>
             <section className='bg-[#F6F5FF] py-[64px]'>
                 <Container>
-                    <div className="">
+                     <div className="">
                         <h2 className='text-[36px] font-Josefin font-bold text-[#101750] py-4'>Shop Grid Default</h2>
                         <div className="flex items-center py-2 gap-x-2">
                             <Link to="/">
@@ -170,10 +176,12 @@ export const Product = () => {
                                     <IoIosArrowDown className='text-[20px]' />
                                 </div>
                                 {cate &&
-                                    <div className="absolute top-[29px] left-0 w-full">
-                                        <ul className='border-1 text-center py-2'>
+                                    <div className="absolute top-[29px] left-0 w-full h-[400px] overflow-y-scroll bg-[grey]">
+                                        <ul className='border-1 text-center py-2 cursor-pointer'>
                                            
+                                            <li onClick={handleAllproduct}>All Product</li>
                                             {ccategory.map((item) => (
+
                                                 <li onClick={() => handlecate(item)}>{item}</li>
                                             ))}
                                         </ul>
