@@ -80,25 +80,25 @@ const Registration = () => {
           </p>
           <div className="ml-[40%] translate-x-[-50%]">
             <form>
-              <input className='h-[52px] w-[432px] border-1 mt-[44px] text-[17px] font-Lato font-medium text-[#9096B2] pl-2 outline-none' type="text"  placeholder='First Name'/>
-               <input className='h-[52px] w-[432px] border-1 mt-[30px] text-[17px] font-Lato font-medium text-[#9096B2] pl-2 outline-none' type="text"  placeholder='Last Name'/>
-                                 <input className='h-[52px] w-[432px] border-1 mt-[44px] text-[17px] font-Lato font-medium text-[#9096B2] pl-2 outline-none' type="number"  placeholder='Phone Number'/>
-                                <input className='h-[52px] w-[432px] border-1 mt-[30px] text-[17px] font-Lato font-medium text-[#9096B2] pl-2 outline-none' type="text"  placeholder='Address'/>
-              <input
+              <input  required className='h-[52px] w-[432px] border-1 mt-[44px] text-[17px] font-Lato font-medium text-[#9096B2] pl-2 outline-none' type="text"  placeholder='First Name'/>
+               <input required className='h-[52px] w-[432px] border-1 mt-[30px] text-[17px] font-Lato font-medium text-[#9096B2] pl-2 outline-none' type="text"  placeholder='Last Name'/>
+                                 <input required className='h-[52px] w-[432px] border-1 mt-[44px] text-[17px] font-Lato font-medium text-[#9096B2] pl-2 outline-none' type="number"  placeholder='Phone Number'/>
+                                <input  required className='h-[52px] w-[432px] border-1 mt-[30px] text-[17px] font-Lato font-medium text-[#9096B2] pl-2 outline-none' type="text"  placeholder='Address'/>
+              <input required
                 onChange={handleemail}
                 value={email}
                 className="h-[52px] w-[432px] border-1 mt-[44px] text-[17px] font-Lato font-medium text-[#9096B2] pl-2 outline-none"
                 type="email"
                 placeholder="Email Address"
               />
-              <input
+              <input required
                 onChange={handlepassword}
                 value={password}
                 className="h-[52px] w-[432px] border-1 mt-[30px] text-[17px] font-Lato font-medium text-[#9096B2] pl-2 outline-none"
                 type="password"
                 placeholder="Password"
               />
-              <input
+              <input required
                 onClick={handleemaipass}
                 className="h-[52px] bg-[#FB2E86] w-[432px] border-1 mt-[30px] text-[17px] font-Lato font-medium text-[#fff] pl-2 outline-none"
                 type="submit"

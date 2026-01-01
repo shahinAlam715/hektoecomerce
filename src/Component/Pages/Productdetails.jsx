@@ -6,10 +6,11 @@ import { IoStarHalfSharp, IoStarOutline, IoStarSharp } from 'react-icons/io5'
 import { FaFacebookF, FaInstagram, FaRegHeart, FaTwitter } from 'react-icons/fa'
 import update1 from "../../assets/update1.png"
 import { RiInstagramFill } from 'react-icons/ri'
-import { IoMdArrowRoundForward } from 'react-icons/io'
+import { IoIosArrowBack, IoIosArrowForward, IoMdArrowRoundForward } from 'react-icons/io'
 import { toast, ToastContainer } from 'react-toastify'
 import { useDispatch } from 'react-redux'
 import { addtoCart } from '../Slice/CountSlice'
+import Slider from 'react-slick'
 
 
 
@@ -36,7 +37,7 @@ const Productdetails = () => {
         getid()
     },[])
 
-    let Clientrating = Array.from({ length: 5},(_, index)=>{
+    let Clientrating = (rating)=> Array.from({ length: 5},(_, index)=>{
         let number = index + 0.5
         return(
             singleproduct.rating > index + 1 ?  <IoStarSharp  className='text-[24px] text-[gold]'/>
@@ -49,6 +50,9 @@ const Productdetails = () => {
 
      //  Productdetails end //
 
+
+     // Move CartPage //
+
      let navigate = useNavigate()
 
      let handlecart = (item)=>{
@@ -59,8 +63,122 @@ const Productdetails = () => {
         },2000)
      }
 
+     let handlecartt = (item)=>{
+         dispacth(addtoCart({...item, quntity: 1}))
+        toast("Add to Cart Succesfull")
+        setTimeout(()=>{
+            navigate("/cart")
+        },2000)
+     }
+
 
      let dispacth = useDispatch()
+
+
+
+     //related product//
+
+     let [relatedProducts, setRelatedProducts] = useState([]);
+
+     useEffect(() => {
+  if (singleproduct?.category) {
+    axios
+      .get(`https://dummyjson.com/products/category/${singleproduct.category}`)
+      .then((res) => {
+        // এবার same product বাদ দাও
+        const others = res.data.products.filter(
+          (item) => item.id !== singleproduct.id
+        );
+        setRelatedProducts(others);
+      })
+      .catch((err) => console.log(err));
+  }
+}, [singleproduct]);
+
+
+
+    // Slider start //
+
+    function SampleNextArrow(props) {
+      const { className, onClick } = props;
+      return (
+        <div
+          className="bg-[green] text-[#fff] absolute top-[50%] right-[20px] z-100 h-[30px] w-[30px] rounded-full"
+          onClick={onClick}
+        > <IoIosArrowForward  className='text-[20px] mx-auto mt-[50%] translate-y-[-50%]'/></div>
+      );
+    }
+    
+    function SamplePrevArrow(props) {
+      const { className, onClick } = props;
+      return (
+        <div className="bg-[green] text-[#fff] w-[30px] h-[30px] rounded-full absolute top-[50%] left-[20px] z-100"
+          onClick={onClick}
+        > <IoIosArrowBack className="absolute top-[50%] left-[10%] translate-y-[-50%] text-[20px]"/>
+    </div>
+      );
+    }
+
+    const settings = {
+    dots: true,
+    infinite: true,
+    speed: 500,
+    slidesToShow: 4,
+    slidesToScroll: 1,
+     nextArrow: <SampleNextArrow />,
+    prevArrow: <SamplePrevArrow />,
+
+   
+     responsive: [
+        {
+        breakpoint: 1280,
+        settings: {
+          slidesToShow: 4,
+          slidesToScroll: 4,
+          infinite: true,
+          dots: true
+        }
+      },
+      {
+        breakpoint: 1024,
+        settings: {
+          slidesToShow: 3,
+          slidesToScroll: 3,
+          infinite: true,
+          dots: true
+        }
+      },
+      {
+        breakpoint: 640,
+        settings: {
+          slidesToShow: 2,
+          slidesToScroll: 2,
+          initialSlide: 2
+        }
+      },
+      {
+        breakpoint: 480,
+        settings: {
+          slidesToShow: 1,
+          slidesToScroll: 1
+        }
+      }
+    ]
+  }
+
+
+
+  // mmainimg // ismallimg //
+
+const [mainImg, setMainImg] = useState("");
+
+useEffect(() => {
+  if (singleproduct?.thumbnail) {
+    setMainImg(singleproduct.thumbnail);
+  }
+}, [singleproduct]);
+
+
 
     return (
         <>
@@ -83,18 +201,17 @@ const Productdetails = () => {
             <section>
                 <Container>
                     <div className="my-[64px]">
+                           
                         <div className="grid sm:grid-cols-1 lg:grid-cols-2  bg-[#F6F5FF] py-2 px-2">
                             <div className="grid grid-cols-12 px-2 py-2">
-                                <div className="col-span-4">
-                                    <div className="bg-[purple]">
-                                    <img src={singleproduct.thumbnail} alt="" />
+                                <div className="col-span-4 h-[583px] overflow-y-scroll cursor-auto">
+
+                                    {relatedProducts.map((item)=>(
+
+                                    <div className="bg-[purple] my-2" key={item.id} onClick={()=>setsingleproduct(item)}>
+                                    <img src={item.thumbnail} alt="" />
                                     </div>
-                                      <div className="bg-[purple] my-1">
-                                    <img src={singleproduct.thumbnail} alt="" />
-                                    </div>
-                                      <div className="bg-[purple]">
-                                    <img src={singleproduct.thumbnail} alt="" />
-                                    </div>
+                                    ))}
                                 </div>
                                 <div className="col-span-8 mx-auto mt-[0%] bg-[#fff]">
                                     <img className='w-full mt-[50%]' src={singleproduct.thumbnail} alt="" />
@@ -102,12 +219,15 @@ const Productdetails = () => {
                             </div>
                             <div className="">
 
+                               
+
+                                    
                                 <div className="mt-[64px]">
-                                <h2 className='text-[36px] font-Josefin font-bold text-[#0D134E]'>Playwood arm chair</h2>
+                                <h2 className='text-[36px] font-Josefin font-bold text-[#0D134E] my-2'>{singleproduct.title}</h2>
                                 </div>
 
                                 <div className="flex my-2">
-                                    { Clientrating}
+                                    { Clientrating(singleproduct.rating)}
                                     <div className="px-2">
                                         ({singleproduct.rating})
                                     </div>
@@ -129,6 +249,7 @@ const Productdetails = () => {
                                 <div className=" pr-2 my-2">
                                     <h2 className='text-[16px] font-Josefin text-[#A9ACC6] font-blod leading-[30px]'>{singleproduct.description}</h2>
                                 </div>
+                               
 
                                 <div className="flex items-center gap-x-4 my-[64px] justify-center">
                                     <div className="" onClick={()=>handlecart(singleproduct)}>
@@ -193,6 +314,7 @@ const Productdetails = () => {
 
                             </div>
                         </div>
+                           
                     </div>
                 </Container>
 
@@ -277,66 +399,34 @@ const Productdetails = () => {
                             <div className="my-4">
                                 <h2 className='text-[36px] font-Josefin font-bold text-[#101750]'>Related Products</h2>
                             </div>
-                            <div className=" grid lg:grid-cols-4 sm:grid-cols-2 gap-x-5">
-                                <div className="">
-                                    <div className="">
-                                    <img className='bg-[#808080a1]' src={singleproduct.thumbnail} alt="" />
-                                    </div>
-                                    <div className="flex items-center py-2 justify-between">
-                                        <div className="">
-                                            <h2>{singleproduct.title}</h2>
-                                        </div>
-                                        <div className="flex items-center pr-2">
-                                            {Clientrating}
-                                        </div>
-                                    </div>
-                                    <div className="">
-                                        <h2>${singleproduct.price}</h2>
-                                    </div>
-                                </div>
+            
                                  <div className="">
-                                    <img className='bg-[#808080a1]' src={singleproduct.thumbnail} alt="" />
-                                    <div className="grid grid-cols-2 py-2 justify-between">
+                                    <Slider {...settings}>
+
+
+                                   {relatedProducts.map((item)=>(
+
+                                   <div className="" onClick={()=>handlecartt(item)}>
+                                     <img className='bg-[#808080a1] m-2' src={item.thumbnail} alt="" />
+                                       
+                                       
+                                    <div className="flex items-center py-2 px-2 justify-between">
                                         <div className="">
-                                            <h2>{singleproduct.title}</h2>
+                                            <h2>{item.title}</h2>
                                         </div>
                                         <div className="flex items-center pr-2">
-                                            {Clientrating}
+                                            {Clientrating(item.rating)}
                                         </div>
                                     </div>
-                                    <div className="">
-                                        <h2>${singleproduct.price}</h2>
+                                    <div className="pl-2">
+                                        <h2>${item.price}</h2>
                                     </div>
-                                </div>
-                                 <div className="">
-                                    <img className='bg-[#808080a1]' src={singleproduct.thumbnail} alt="" />
-                                    <div className="flex items-center py-2 justify-between">
-                                        <div className="">
-                                            <h2>{singleproduct.title}</h2>
-                                        </div>
-                                        <div className="flex items-center pr-2">
-                                            {Clientrating}
-                                        </div>
+                                   </div>
+                                    ))}
+                                    </Slider>
                                     </div>
-                                    <div className="">
-                                        <h2>${singleproduct.price}</h2>
-                                    </div>
-                                </div>
-                                 <div className="">
-                                    <img className='bg-[#808080a1]' src={singleproduct.thumbnail} alt="" />
-                                    <div className="flex items-center py-2 justify-between">
-                                        <div className="">
-                                            <h2>{singleproduct.title}</h2>
-                                        </div>
-                                        <div className="flex items-center pr-2">
-                                            {Clientrating}
-                                        </div>
-                                    </div>
-                                    <div className="">
-                                        <h2>${singleproduct.price}</h2>
-                                    </div>
-                                </div>
-                            </div>
+
+
                         </div>
 
                     <div className="flex justify-center my-[64px]">
